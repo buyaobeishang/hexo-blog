@@ -27,7 +27,7 @@ tmux 学习
 
 类似的终端复用器还有 GNU Screen。Tmux 与它功能相似，但是更易用，也更强大。
 
-```bash
+```
 # Ubuntu 或 Debian
 $ sudo apt-get install tmux
 
@@ -40,7 +40,6 @@ $ brew install tmux
 
 安装完成后，键入 `tmux`命令，就进入了 Tmux 窗口。
 
-
 按下 `Ctrl+d`或者显式输入 `exit`命令，就可以退出 Tmux 窗口
 
 Tmux 窗口有大量的快捷键。所有快捷键都要通过前缀键唤起。默认的前缀键是 `Ctrl+b`，即先按下 `Ctrl+b`，快捷键才会生效。
@@ -50,27 +49,23 @@ Tmux 窗口有大量的快捷键。所有快捷键都要通过前缀键唤起。
 
 在 Tmux 窗口中，按下 `Ctrl+b d`或者输入 `tmux detach`命令，就会将当前会话与窗口分离。
 
-> ```bash
->
-> $ tmux detach
-> ```
-
-上面命令执行后，就会退出当前 Tmux 窗口，但是会话和里面的进程仍然在后台运行。
+```
+$ tmux detach
+```
 
 `tmux ls`命令可以查看当前所有的 Tmux 会话。
 
-> ```bash
->
-> $ tmux ls
-> # or
-> $ tmux list-session
-> ```
+```
+$ tmux ls
+# or
+$ tmux list-session
+```
 
 ### 接入会话
 
 `tmux attach`命令用于重新接入某个已存在的会话。
 
-```bash
+```
 # 使用会话编号
 $ tmux attach -t 0
 
@@ -82,35 +77,34 @@ $ tmux attach -t <session-name>
 
 `tmux kill-session`命令用于杀死某个会话。
 
-```bash
-> 
-> # 使用会话编号
-> $ tmux kill-session -t 0
-> 
-> # 使用会话名称
-> $ tmux kill-session -t <session-name>
 ```
+# 使用会话编号
+$ tmux kill-session -t 0
+ 
+# 使用会话名称
+$ tmux kill-session -t <session-name>
+```
+
+
 
 ### 切换会话
 
 `tmux switch`命令用于切换会话。
 
-```bash
-> 
-> # 使用会话编号
-> $ tmux switch -t 0
-> 
-> # 使用会话名称
-> $ tmux switch -t <session-name>
+```
+# 使用会话编号
+$ tmux switch -t 0
+ 
+# 使用会话名称
+$ tmux switch -t <session-name>
 ```
 
 ### 重命名会话
 
 `tmux rename-session`命令用于重命名会话。
 
-```bash
-> 
-> $ tmux rename-session -t 0 <new-name>
+```
+$ tmux rename-session -t 0 <new-name>
 ```
 
 ## 最简操作流程
@@ -156,8 +150,7 @@ $ tmux attach -t <session-name>
 
 下面是一些其他命令。
 
-> ```bash
->
+> ```
 > # 列出所有快捷键，及其对应的 Tmux 命令
 > $ tmux list-keys
 >
@@ -170,4 +163,3 @@ $ tmux attach -t <session-name>
 > # 重新加载当前的 Tmux 配置
 > $ tmux source-file ~/.tmux.conf
 > ```
->
