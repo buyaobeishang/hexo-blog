@@ -12,7 +12,7 @@ menu:
     icon: fas fa-bookmark
     children:
       - name: Java
-        url: https://github.com/buyaobeishang/Xymm
+        url: https://xymm.shikai.wang
       - name: Java
         url: https://github.com/buyaobeishang/Xymm
       - name: Java
