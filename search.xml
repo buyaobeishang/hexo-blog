@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>tmux 学习</title>
+      <link href="/2023/06/05/tmux/"/>
+      <url>/2023/06/05/tmux/</url>
+      
+        <content type="html"><![CDATA[<hr><p>tmux 学习</p><p>命令行的典型使用方式是，打开一个终端窗口（terminal window，以下简称”窗口”），在里面输入命令。<strong>用户与计算机的这种临时的交互，称为一次”会话”（session）</strong> 。<br>会话的一个重要特点是，窗口与其中启动的进程是<a href="http://www.ruanyifeng.com/blog/2016/02/linux-daemon.html">连在一起</a>的。打开窗口，会话开始；关闭窗口，会话结束，会话内部的进程也会随之终止，不管有没有运行完。<br>一个典型的例子就是，<a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html">SSH 登录</a>远程计算机，打开一个远程窗口执行命令。这时，网络突然断线，再次登录的时候，是找不回上一次执行的命令的。因为上一次 SSH 会话已经终止了，里面的进程也随之消失了。<br>为了解决这个问题，会话与窗口可以”解绑”：窗口关闭时，会话并不终止，而是继续运行，等到以后需要的时候，再让会话”绑定”其他窗口。</p><p><strong>Tmux 就是会话与窗口的”解绑”工具，将它们彻底分离。</strong></p><blockquote><p>（1）它允许在单个窗口中，同时访问多个会话。这对于同时运行多个命令行程序很有用。</p><p>（2） 它可以让新窗口”接入”已经存在的会话。</p><p>（3）它允许每个会话有多个连接窗口，因此可以多人实时共享会话。</p><p>（4）它还支持窗口任意的垂直和水平拆分。</p></blockquote><p>类似的终端复用器还有 GNU Screen。Tmux 与它功能相似，但是更易用，也更强大。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># Ubuntu 或 Debian</span><br><span class="line">$ sudo apt-get install tmux</span><br><span class="line"></span><br><span class="line"># CentOS 或 Fedora</span><br><span class="line">$ sudo yum install tmux</span><br><span class="line"></span><br><span class="line"># Mac</span><br><span class="line">$ brew install tmux</span><br></pre></td></tr></table></figure><p>安装完成后，键入 <code>tmux</code>命令，就进入了 Tmux 窗口。</p><p>按下 <code>Ctrl+d</code>或者显式输入 <code>exit</code>命令，就可以退出 Tmux 窗口</p><p>Tmux 窗口有大量的快捷键。所有快捷键都要通过前缀键唤起。默认的前缀键是 <code>Ctrl+b</code>，即先按下 <code>Ctrl+b</code>，快捷键才会生效。<br>举例来说，帮助命令的快捷键是 <code>Ctrl+b ?</code>。它的用法是，在 Tmux 窗口中，先按下 <code>Ctrl+b</code>，再按下 <code>?</code>，就会显示帮助信息。然后，按下 ESC 键或 <code>q</code>键，就可以退出帮助。</p><h3 id="分离会话"><a href="#分离会话" class="headerlink" title="分离会话"></a>分离会话</h3><p>在 Tmux 窗口中，按下 <code>Ctrl+b d</code>或者输入 <code>tmux detach</code>命令，就会将当前会话与窗口分离。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tmux detach</span><br></pre></td></tr></table></figure><p><code>tmux ls</code>命令可以查看当前所有的 Tmux 会话。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ tmux ls</span><br><span class="line"># or</span><br><span class="line">$ tmux list-session</span><br></pre></td></tr></table></figure><h3 id="接入会话"><a href="#接入会话" class="headerlink" title="接入会话"></a>接入会话</h3><p><code>tmux attach</code>命令用于重新接入某个已存在的会话。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 使用会话编号</span><br><span class="line">$ tmux attach -t 0</span><br><span class="line"></span><br><span class="line"># 使用会话名称</span><br><span class="line">$ tmux attach -t &lt;session-name&gt;</span><br></pre></td></tr></table></figure><h3 id="杀死会话"><a href="#杀死会话" class="headerlink" title="杀死会话"></a>杀死会话</h3><p><code>tmux kill-session</code>命令用于杀死某个会话。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 使用会话编号</span><br><span class="line">$ tmux kill-session -t 0</span><br><span class="line"> </span><br><span class="line"># 使用会话名称</span><br><span class="line">$ tmux kill-session -t &lt;session-name&gt;</span><br></pre></td></tr></table></figure><h3 id="切换会话"><a href="#切换会话" class="headerlink" title="切换会话"></a>切换会话</h3><p><code>tmux switch</code>命令用于切换会话。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 使用会话编号</span><br><span class="line">$ tmux switch -t 0</span><br><span class="line"> </span><br><span class="line"># 使用会话名称</span><br><span class="line">$ tmux switch -t &lt;session-name&gt;</span><br></pre></td></tr></table></figure><h3 id="重命名会话"><a href="#重命名会话" class="headerlink" title="重命名会话"></a>重命名会话</h3><p><code>tmux rename-session</code>命令用于重命名会话。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tmux rename-session -t 0 &lt;new-name&gt;</span><br></pre></td></tr></table></figure><h2 id="最简操作流程"><a href="#最简操作流程" class="headerlink" title="最简操作流程"></a>最简操作流程</h2><p>综上所述，以下是 Tmux 的最简操作流程。</p><blockquote><ol><li>新建会话 <code>tmux new -s my_session</code>。</li><li>在 Tmux 窗口运行所需的程序。</li><li>按下快捷键 <code>Ctrl+b d</code>将会话分离。</li><li>下次使用时，重新连接到会话 <code>tmux attach-session -t my_session</code>。</li></ol></blockquote><h3 id="窗格快捷键"><a href="#窗格快捷键" class="headerlink" title="窗格快捷键"></a>窗格快捷键</h3><p>下面是一些窗格操作的快捷键。</p><blockquote><ul><li><code>Ctrl+b %</code>：划分左右两个窗格。</li><li><code>Ctrl+b &quot;</code>：划分上下两个窗格。</li><li><code>Ctrl+b &lt;arrow key&gt;</code>：光标切换到其他窗格。<code>&lt;arrow key&gt;</code>是指向要切换到的窗格的方向键，比如切换到下方窗格，就按方向键 <code>↓</code>。</li><li><code>Ctrl+b ;</code>：光标切换到上一个窗格。</li><li><code>Ctrl+b o</code>：光标切换到下一个窗格。</li><li><code>Ctrl+b &#123;</code>：当前窗格与上一个窗格交换位置。</li><li><code>Ctrl+b &#125;</code>：当前窗格与下一个窗格交换位置。</li><li><code>Ctrl+b Ctrl+o</code>：所有窗格向前移动一个位置，第一个窗格变成最后一个窗格。</li><li><code>Ctrl+b Alt+o</code>：所有窗格向后移动一个位置，最后一个窗格变成第一个窗格。</li><li><code>Ctrl+b x</code>：关闭当前窗格。</li><li><code>Ctrl+b !</code>：将当前窗格拆分为一个独立窗口。</li><li><code>Ctrl+b z</code>：当前窗格全屏显示，再使用一次会变回原来大小。</li><li><code>Ctrl+b Ctrl+&lt;arrow key&gt;</code>：按箭头方向调整窗格大小。</li><li><code>Ctrl+b q</code>：显示窗格编号。</li></ul></blockquote><h3 id="窗口快捷键"><a href="#窗口快捷键" class="headerlink" title="窗口快捷键"></a>窗口快捷键</h3><p>下面是一些窗口操作的快捷键。</p><blockquote><ul><li><code>Ctrl+b c</code>：创建一个新窗口，状态栏会显示多个窗口的信息。</li><li><code>Ctrl+b p</code>：切换到上一个窗口（按照状态栏上的顺序）。</li><li><code>Ctrl+b n</code>：切换到下一个窗口。</li><li><code>Ctrl+b &lt;number&gt;</code>：切换到指定编号的窗口，其中的 <code>&lt;number&gt;</code>是状态栏上的窗口编号。</li><li><code>Ctrl+b w</code>：从列表中选择窗口。</li><li><code>Ctrl+b ,</code>：窗口重命名。</li></ul></blockquote><h2 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h2><p>下面是一些其他命令。</p><blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 列出所有快捷键，及其对应的 Tmux 命令</span><br><span class="line">$ tmux list-keys</span><br><span class="line"></span><br><span class="line"># 列出所有 Tmux 命令及其参数</span><br><span class="line">$ tmux list-commands</span><br><span class="line"></span><br><span class="line"># 列出当前所有 Tmux 会话的信息</span><br><span class="line">$ tmux info</span><br><span class="line"></span><br><span class="line"># 重新加载当前的 Tmux 配置</span><br><span class="line">$ tmux source-file ~/.tmux.conf</span><br></pre></td></tr></table></figure></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> TMUX </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> TMUX </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="/2023/06/05/hello-world/"/>
+      <url>/2023/06/05/hello-world/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><p>Run server</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>测试Hexp文章是否展示</title>
+      <link href="/2023/06/05/test/"/>
+      <url>/2023/06/05/test/</url>
+      
+        <content type="html"><![CDATA[<hr><p>测试文章</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure><p>balabalabalabala</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
