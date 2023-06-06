@@ -745,3 +745,7 @@ mermaid: ## mermaid url https://github.com/knsv/mermaid
   version: "latest" # default v7.1.2
   options:  # find more api options from https://github.com/knsv/mermaid/blob/master/src/mermaidAPI.js
     #startOnload: true  // default true
+deploy:
+  type: git
+  repo: https://github.com/buyaobeishang/hexo-blog.git
+  branch: main 
