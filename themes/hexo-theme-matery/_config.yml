@@ -747,5 +747,5 @@ mermaid: ## mermaid url https://github.com/knsv/mermaid
     #startOnload: true  // default true
 deploy:
   type: git
-  repo: https://github.com/buyaobeishang/hexo-blog.git
+  repo: git@github.com:buyaobeishang/hexo-blog.git
   branch: main 
