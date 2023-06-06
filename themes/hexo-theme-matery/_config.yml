@@ -27,12 +27,12 @@ menu:
   About:
     url: /about
     icon: fas fa-user-circle
-  Contact:
-    url: /contact
-    icon: fas fa-comments
-  Friends:
-    url: /friends
-    icon: fas fa-address-book
+  # Contact:
+  #   url: /contact
+  #   icon: fas fa-comments
+  # Friends:
+  #   url: /friends
+  #   icon: fas fa-address-book
   # 二级菜单写法如下
   #Medias:
   #  icon: fas fa-list
@@ -561,6 +561,16 @@ featureImages:
 - /medias/featureimages/21.jpg
 - /medias/featureimages/22.jpg
 - /medias/featureimages/23.jpg
+- /medias/featureimages/24.jpg
+- /medias/featureimages/25.jpg
+- /medias/featureimages/26.jpg
+- /medias/featureimages/27.jpg
+- /medias/featureimages/28.jpg
+- /medias/featureimages/29.jpg
+- /medias/featureimages/30.jpg
+- /medias/featureimages/31.jpg
+- /medias/featureimages/32.jpg
+- /medias/featureimages/33.jpg
 
 # default configs that the default policy for every articles/posts
 # default 配置文章的默认转载规则
@@ -611,14 +621,18 @@ canvas_nest:
 # 背景静止彩带.
 ribbon:
   enable: false
-  size: 150 # 彩带大小, 默认: 90.
+  size: 20 # 彩带大小, 默认: 90.
   alpha: 0.6 # 彩带透明度 (0 ~ 1), 默认: 0.6.
   zIndex: -1 # 背景的z-index属性，css属性用于控制所在层的位置, 默认: -1.
-  clickChange: false  # 设置是否每次点击都更换彩带.
+  clickChange: true  # 设置是否每次点击都更换彩带.
 
 # 背景动态彩带.
 ribbon_dynamic:
-  enable: false
+  enable: true
+  size: 20 # 彩带大小, 默认: 90.
+  alpha: 0.6 # 彩带透明度 (0 ~ 1), 默认: 0.6.
+  zIndex: -1 # 背景的z-index属性，css属性用于控制所在层的位置, 默认: -1.
+  clickChange: true  # 设置是否每次点击都更换彩带.
 
 # sharejs文章分享模块.
 # 支持顺序，可选项目为twitter, facebook, google, qq, qzone, wechat, weibo, douban, linkedin.
