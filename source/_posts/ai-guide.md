@@ -5,7 +5,8 @@ tags:
   - AI
   - 入门
 categories:
-  - 技术
+  - AI
+comments: true
 ---
 
 ## 什么是AI
